@@ -1,0 +1,248 @@
+
+	Program : MySQL
+	Author : PayalMalawalkar
+	Date :3 Nov
+
+
+
+
+
+
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database abc;
+Query OK, 1 row affected (0.09 sec)
+
+
+mysql> use abc;
+Database changed
+mysql> create table project(
+    -> pNo int,
+    -> pName varchar(50),
+    -> budget int,
+    -> dNo int,
+    -> PRIMARY KEY(pNo)
+    -> );
+Query OK, 0 rows affected (0.24 sec)
+
+
+
+mysql> create table dept(
+    -> dNo int,
+    -> dName varchar(60),
+    -> location varchar(70),
+    -> PRIMARY KEY(dNo)
+    -> );
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> create table emp(
+    -> eNo int,
+    -> eName varchar(30),
+    -> salary int,
+    -> designation varchar(70),
+    -> pNo int,
+    -> dNo int,
+    -> FOREIGN KEY(dNo) REFERENCES dept(dNo));
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> INSERT INTO dept VALUES(1,"Accounts Dept","Mumbai");
+Query OK, 1 row affected (0.30 sec)
+
+mysql> INSERT INTO dept VALUES(2,"HR Dept","NaviMumbai");
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO dept VALUES(3,"Sales Dept","Pune");
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO project VALUES(101,"javaMVC",67000,1);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> INSERT INTO project VALUES(102,"python",47000,2);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> INSERT INTO project VALUES(103,"DotNet",87000,3);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> INSERT INTO project VALUES(104,"DotNetMVC",50000,3);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO project VALUES(105,"DBMS",47000,2);
+Query OK, 1 row affected (0.10 sec)
+
+mysql>
+mysql> INSERT INTO emp VALUES(1001,"Ram","Manager",101,1);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> mysql> INSERT INTO emp VALUES(1001,"Ram",75000,"Manager",101,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> INSERT INTO emp VALUES(1001,"Ram",75000,"Manager",101,1)' at line 1
+mysql> INSERT INTO emp VALUES(21,"Ram",67000,"Manager",101,2);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO emp VALUES(22,"Shyam",55000,"Senior Executive",103,3);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO emp VALUES(23,"Nick",45000,"Executive",101,1)
+    ->
+    -> INSERT INTO emp VALUES(23,"Nick",45000,"Executive",101,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO emp VALUES(23,"Nick",45000,"Executive",101,1)' at line 3
+mysql> ^C
+mysql> INSERT INTO emp VALUES(23,"Nick",45000,"Executive",101,1);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> ^C
+mysql> INSERT INTO emp VALUES(24,"Ria",35000,"Sales Executive",103,3);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO emp VALUES(24,"Ana",25000,"Intern",105,1);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO emp VALUES(25,"John",35000,"JuniorExecutive",102,2);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> INSERT INTO emp VALUES(26,"Om",75000,"TeamLead",104,1);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> INSERT INTO emp VALUES(27,"Tia",40000,"Executive",101,3);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO emp VALUES(28,"Rao",45000,"Clerk",104,1);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO emp VALUES(29,"Siya",55000,"Developer",105,1);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO emp VALUES(30,"Anay",25000,"Intern",104,2);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT *from emp WHERE designation="Manager";
++------+-------+--------+-------------+------+------+
+| eNo  | eName | salary | designation | pNo  | dNo  |
++------+-------+--------+-------------+------+------+
+|   21 | Ram   |  67000 | Manager     |  101 |    2 |
++------+-------+--------+-------------+------+------+
+1 row in set (0.26 sec)
+
+mysql> UPDATE emp,project
+    -> SET salary = salary+5000
+    -> WHERE budget>60000;
+Query OK, 11 rows affected (0.27 sec)
+Rows matched: 11  Changed: 11  Warnings: 0
+
+mysql> SELECT *from emp;
++------+-------+--------+------------------+------+------+
+| eNo  | eName | salary | designation      | pNo  | dNo  |
++------+-------+--------+------------------+------+------+
+|   21 | Ram   |  72000 | Manager          |  101 |    2 |
+|   22 | Shyam |  60000 | Senior Executive |  103 |    3 |
+|   23 | Nick  |  50000 | Executive        |  101 |    1 |
+|   24 | Ria   |  40000 | Sales Executive  |  103 |    3 |
+|   24 | Ana   |  30000 | Intern           |  105 |    1 |
+|   25 | John  |  40000 | JuniorExecutive  |  102 |    2 |
+|   26 | Om    |  80000 | TeamLead         |  104 |    1 |
+|   27 | Tia   |  45000 | Executive        |  101 |    3 |
+|   28 | Rao   |  50000 | Clerk            |  104 |    1 |
+|   29 | Siya  |  60000 | Developer        |  105 |    1 |
+|   30 | Anay  |  30000 | Intern           |  104 |    2 |
++------+-------+--------+------------------+------+------+
+11 rows in set (0.00 sec)
+
+mysql> ALTER TABLE project
+    -> ADD hours_needed int;
+Query OK, 0 rows affected (0.30 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *from project;
++-----+-----------+--------+------+--------------+
+| pNo | pName     | budget | dNo  | hours_needed |
++-----+-----------+--------+------+--------------+
+| 101 | javaMVC   |  67000 |    1 |         NULL |
+| 102 | python    |  47000 |    2 |         NULL |
+| 103 | DotNet    |  87000 |    3 |         NULL |
+| 104 | DotNetMVC |  50000 |    3 |         NULL |
+| 105 | DBMS      |  47000 |    2 |         NULL |
++-----+-----------+--------+------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE project
+    -> RENAME COLUMN pName TO projectName;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+
+mysql> SELECT * FROM project ORDER BY budget DESC;
++-----+-------------+--------+------+--------------+
+| pNo | projectName | budget | dNo  | hours_needed |
++-----+-------------+--------+------+--------------+
+| 103 | DotNet      |  87000 |    3 |         NULL |
+| 101 | javaMVC     |  67000 |    1 |         NULL |
+| 104 | DotNetMVC   |  50000 |    3 |         NULL |
+| 102 | python      |  47000 |    2 |         NULL |
+| 105 | DBMS        |  47000 |    2 |         NULL |
++-----+-------------+--------+------+--------------+
+5 rows in set (0.10 sec)
+
+mysql> SELECT * FROM project,dept  WHERE location ="Mumbai" ORDER BY budget ;
++-----+-------------+--------+------+--------------+-----+---------------+----------+
+| pNo | projectName | budget | dNo  | hours_needed | dNo | dName         | location |
++-----+-------------+--------+------+--------------+-----+---------------+----------+
+| 102 | python      |  47000 |    2 |         NULL |   1 | Accounts Dept | Mumbai   |
+| 105 | DBMS        |  47000 |    2 |         NULL |   1 | Accounts Dept | Mumbai   |
+| 104 | DotNetMVC   |  50000 |    3 |         NULL |   1 | Accounts Dept | Mumbai   |
+| 101 | javaMVC     |  67000 |    1 |         NULL |   1 | Accounts Dept | Mumbai   |
+| 103 | DotNet      |  87000 |    3 |         NULL |   1 | Accounts Dept | Mumbai   |
++-----+-------------+--------+------+--------------+-----+---------------+----------+
+5 rows in set (0.07 sec)
+
+mysql> SELECT * FROM emp WHERE designation="Developer" OR designation="Executive";
++------+-------+--------+-------------+------+------+
+| eNo  | eName | salary | designation | pNo  | dNo  |
++------+-------+--------+-------------+------+------+
+|   23 | Nick  |  50000 | Executive   |  101 |    1 |
+|   27 | Tia   |  45000 | Executive   |  101 |    3 |
+|   29 | Siya  |  60000 | Developer   |  105 |    1 |
++------+-------+--------+-------------+------+------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT COUNT(pNo)
+    -> FROM dept,project
+    -> WHERE projectName="javaMVC" AND projectName="DotNet";
++------------+
+| COUNT(pNo) |
++------------+
+|          0 |
++------------+
+1 row in set (0.09 sec)
+
+mysql> SELECT * FROM project;
++-----+-------------+--------+------+--------------+
+| pNo | projectName | budget | dNo  | hours_needed |
++-----+-------------+--------+------+--------------+
+| 101 | javaMVC     |  67000 |    1 |         NULL |
+| 102 | python      |  47000 |    2 |         NULL |
+| 103 | DotNet      |  87000 |    3 |         NULL |
+| 104 | DotNetMVC   |  50000 |    3 |         NULL |
+| 105 | DBMS        |  47000 |    2 |         NULL |
++-----+-------------+--------+------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM emp WHERE dNo=1 AND pNo=21 OR pNo=102;
++------+-------+--------+-----------------+------+------+
+| eNo  | eName | salary | designation     | pNo  | dNo  |
++------+-------+--------+-----------------+------+------+
+|   25 | John  |  40000 | JuniorExecutive |  102 |    2 |
++------+-------+--------+-----------------+------+------+
+1 row in set (0.06 sec)
+
+mysql>
